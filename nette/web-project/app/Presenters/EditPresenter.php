@@ -8,11 +8,21 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 {
 	private Nette\Database\Explorer $database;
 
- public function __construct(Nette\Database\Explorer $database)
+public function __construct(Nette\Database\Explorer $database)
 	{
 		$this->database = $database;
 	}
-    protected function createComponentPostForm(): Form
+
+public function startup(): void
+	{
+		parent::startup();
+	
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Sign:in');
+		}
+	}
+
+protected function createComponentPostForm(): Form
     {
 	$form = new Form;
 	$form->addText('title', 'Titulek:')
@@ -25,7 +35,8 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 	return $form;
     }
- public function postFormSucceeded(array $data): void
+ 
+public function postFormSucceeded(array $data): void
     {
         $postId = $this->getParameter('postId');
 

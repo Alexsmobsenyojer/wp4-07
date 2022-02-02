@@ -9,7 +9,14 @@
 
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
+<ul class="navig" >
+	<li><a n:href="Homepage:">Hlavní strana</a></li>
+	{if $user->isLoggedIn()}
+		<li><a n:href="Sign:out">Odhlásit</a></li>
+	{else}
+		<li><a n:href="Sign:in">Přihlásit</a></li>
+	{/if}
+</ul>
 	{include content}
 
 	{block scripts}

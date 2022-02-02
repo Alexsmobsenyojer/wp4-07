@@ -19,7 +19,7 @@
 		<div>{$comment->content}</div>
 	{/foreach}
 </div>
-<a n:href="Edit:edit $post->id">Upravit příspěvek</a>
+<a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>
 <h2>Nový Komentář</h2>
 
 {control commentForm}
