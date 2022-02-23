@@ -48,5 +48,16 @@ public function postFormSucceeded(array $data): void
 	    $this->redirect('Post:show', $post->id);
 	
     }
+public function renderEdit(int $postId): void
+{
+	$post = $this->facade->getPostById($postId);
+
+	if (!$post) {
+		$this->error('Post not found');
+	}
+
+	$this->getComponent('postForm')
+		->setDefaults($post->toArray());
+}
  
 }

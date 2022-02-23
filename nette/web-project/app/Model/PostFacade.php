@@ -26,11 +26,11 @@ final class PostFacade
 	{ $post = $this->database
 		->table('posts')
 		->get($postId);
-	 return $post;
+	  return $post;
 	}
 	
 	public function getComments(int $postId)
-	{return $this->database
+	{      return $this->database
 		      ->table('comments')
 		      ->where('post_id',$postId );
 	
