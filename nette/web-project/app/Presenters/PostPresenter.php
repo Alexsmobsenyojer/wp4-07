@@ -24,7 +24,7 @@ public function renderShow(int $postId): void
 	}
 
 	$this->template->post = $post;
-	$this->template->comments = $post->related('comments')->order('created_at');
+	$this->template->comments = $this->facade->getComments($postId);
     }  
 
 protected function createComponentCommentForm(): Form
