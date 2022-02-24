@@ -17,7 +17,7 @@ public function __construct(PostFacade $facade)
 public function renderShow(int $postId): void
     {
 	$post = $this->facade->getPostById($postId);
-		
+	 $this->facade->addVisits($postId);	
 
 	if (!$post) {
 		$this->error('Stránka nebyla nalezena');
@@ -29,7 +29,7 @@ public function renderShow(int $postId): void
 
 protected function createComponentCommentForm(): Form
     {
-	$form = new Form; // means Nette\Application\UI\Form
+	$form = new Form; 
 
 	$form->addText('name', 'Jméno:')
 		->setRequired();

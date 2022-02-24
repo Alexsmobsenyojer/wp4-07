@@ -60,4 +60,11 @@ final class PostFacade
 		'name' => $data->name,
 		'email' => $data->email,
 		'content' => $data->content,]);}
+
+		public function addVisits(int $postId)
+		{$views = $this->database->table('posts')->get($postId)->views_count;
+			$views++;
+			$data["views_count"]=$views;
+			$this->database->table('posts')->get($postId)->update($data);
+		}
 }
