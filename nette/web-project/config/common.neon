@@ -15,10 +15,3 @@ di:
 	export:
 		parameters: no
 		tags: no
-security:
-	users:
-		admin: secret  # uživatel 'admin', heslo 'secret'
-		among: us     
-	authentication:		
-		expiration: 30 minutes        	
-		storage: session           
