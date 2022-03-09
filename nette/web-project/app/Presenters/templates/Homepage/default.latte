@@ -10,6 +10,9 @@
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
 		<div>{$post->content|truncate:256}</div>
+		{if $post->image != NULL}<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}" width="200">
+		{else}<img src="{$basePath}/nodick.jpg" alt="Obrázek k článku {$post->title}" width="200">
+		{/if}
 		
 		<p>zobrazení:{$post->views_count}</p>
 	</div>
