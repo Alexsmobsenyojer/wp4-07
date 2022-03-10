@@ -32,7 +32,7 @@ protected function createComponentPostForm(): Form
 	$form->addTextArea('content', 'Obsah:')
 		->setRequired();
 	$form->addUpload('image', 'Soubor')
-		->setRequired()
+	    #->setRequired();
 		->addRule(Form::IMAGE, 'Thumbnail must be JPEG, PNG or GIF');
 	$form->addSubmit('send', 'Uložit a publikovat');
 	$form->onSuccess[] = [$this, 'postFormSucceeded'];

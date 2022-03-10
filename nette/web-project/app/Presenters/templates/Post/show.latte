@@ -2,16 +2,16 @@
 
 <p><a n:href="Homepage:default">← zpět</a></p>
 
-<div class="date">{$post->created_at|date:'F j, Y'}</div>
-<p>zobrazení:{$post->views_count}</p>
+  <div class="date">{$post->created_at|date:'F j, Y'}</div>
+  <p>zobrazení:{$post->views_count}</p>
 
-<h1 n:block="title">{$post->title}</h1>
+  <h1 n:block="title">{$post->title}</h1>
 
-<div class="post">{$post->content}</div>
-<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-<h2>Komentáře</h2>
+  <div class="post">{$post->content}</div>
+  <img class= "img-fluid " src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+  <h2>Komentáře</h2>
 
-<div class="comments">
+  <div class="comments">
 	{foreach $comments as $comment}
 		<p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">
 			{$comment->name}
@@ -19,8 +19,8 @@
 
 		<div>{$comment->content}</div>
 	{/foreach}
-</div>
-<a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>
-<h2>Nový Komentář</h2>
+  </div>
+  <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>
+  <h2>Nový Komentář</h2>
 
-{control commentForm}
+  {control commentForm}
