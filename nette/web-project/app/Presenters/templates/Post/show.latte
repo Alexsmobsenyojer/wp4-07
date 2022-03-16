@@ -8,7 +8,9 @@
   <h1 n:block="title">{$post->title}</h1>
 
   <div class="post">{$post->content}</div>
-  <img class= "img-fluid " src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+  {if file_exists($post->image) }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
+		{/if} 
   <h2>Komentáře</h2>
 
   <div class="comments">
