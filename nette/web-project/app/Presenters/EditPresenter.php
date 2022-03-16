@@ -63,8 +63,8 @@ public function postFormSucceeded($form, $data): void
 	    $this->redirect('Post:show', $post->id);
 	
     }
-public function renderEdit(int $postId): void
-{
+  public function renderEdit(int $postId): void
+  {
 	$post = $this->facade->getPostById($postId);
 
 	if (!$post) {
@@ -73,6 +73,14 @@ public function renderEdit(int $postId): void
 
 	$this->getComponent('postForm')
 		->setDefaults($post->toArray());
-}
+		$this->template->post = $post;
+  }
  
+  public function handleDelete(int $postId)
+  {$data["image"]= null;
+	  $this->facade->editPost($postId, $data);
+	  $this->flashMessage("Obrázek byl smazán");
+   #$this->redirect("Post:show",$postId);
+  }
+
 }
