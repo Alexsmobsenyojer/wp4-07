@@ -50,6 +50,7 @@ public function postFormSucceeded($form, $data): void
 			$data['image'] = ('upload/'. $data->image->getSanitizedName());
 			}
 			} else {
+				unset($data->image);
 			$this->flashMessage('Soubor nebyl přidán', 'failed');
 			//$this->redirect('this');
 			}
