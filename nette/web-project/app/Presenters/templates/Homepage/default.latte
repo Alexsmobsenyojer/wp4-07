@@ -6,6 +6,8 @@
 	
 	{foreach $posts as $post}
 	<div class="post col-12 col-md-2 border border-warning rounded m-1" >
+	{if $post->status!="ARCHIVED" || ($user->isLoggedIn())}
+	
 		<div class="date ">{$post->created_at|date:'F j, Y'}</div>
 
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
@@ -17,6 +19,9 @@
 		
 		<p>zobrazení:{$post->views_count}</p>
 		<a class="btn btn-warning" n:href="Post:show $post->id"> Více</a>
+	
+	{else} <div class="alert alert-warning">Archivovaný příspěvek</div>
+    {/if}
 	</div>
 	{/foreach}
 	
