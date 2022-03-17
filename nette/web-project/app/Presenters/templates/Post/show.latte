@@ -2,15 +2,17 @@
 
 <p><a n:href="Homepage:default">← zpět</a></p>
 
+{if ($post->status=="OPEN") || ($post->status=="CLOSED ") || ($post->status=="ARCHIVED" && $user->isLoggedIn())}
   <div class="date">{$post->created_at|date:'F j, Y'}</div>
   <p>zobrazení:{$post->views_count}</p>
-
+  <p>{$post->status}</p>
   <h1 n:block="title">{$post->title}</h1>
 
   <div class="post">{$post->content}</div>
   {if  $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else }<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
 		{/if} 
+ <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>  
   <h2>Komentáře</h2>
 
   <div class="comments">
@@ -22,7 +24,13 @@
 		<div>{$comment->content}</div>
 	{/foreach}
   </div>
-  <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>
-  <h2>Nový Komentář</h2>
-
+  
+  {if $post->status=="OPEN" || ($user->isLoggedIn() && $post->status=="CLOSED")}
+  <h2> Nový Komentář</h2>
   {control commentForm}
+  {else}
+  {/if}
+ 
+{else} <div class="alert alert-warning">Nemáte potřebná oprávnění</div>
+{/if}
+

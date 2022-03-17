@@ -3,6 +3,7 @@
 
 	<h1 n:block="title">Zpovědna</h1>
 <div class="row" >
+	
 	{foreach $posts as $post}
 	<div class="post col-12 col-md-2 border border-warning rounded m-1" >
 		<div class="date ">{$post->created_at|date:'F j, Y'}</div>
@@ -10,7 +11,7 @@
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
 		<div class="">{$post->content|truncate:256}</div>
-		{if $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+		{if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
 		{/if}
 		
@@ -18,6 +19,7 @@
 		<a class="btn btn-warning" n:href="Post:show $post->id"> Více</a>
 	</div>
 	{/foreach}
+	
 </div>	
 	<a n:href="Edit:create" n:if="$user->isLoggedIn()">Napsat nový příspěvek</a>
 {/block}

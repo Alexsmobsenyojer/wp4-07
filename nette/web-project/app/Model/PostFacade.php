@@ -21,7 +21,7 @@ final class PostFacade
 			->where('created_at < ', new \DateTime)
 			->order('created_at DESC');
 	}
-	
+
 	public function getPostById(int $postId)
 	{ $post = $this->database
 		->table('posts')
