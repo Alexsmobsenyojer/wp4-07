@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Presenters;
 
 use Nette;
@@ -9,48 +10,57 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 {
 	private PostFacade $facade;
 
-public function __construct(PostFacade $facade)
+	public function __construct(PostFacade $facade)
 	{
 		$this->facade = $facade;
 	}
+	public function actionShow(int $postId): void
+	{
+		$post = $this->facade->getPostById($postId);
+		$this->getUser()->isLoggedIn();
+		if ($post->status == "ARCHIVED" && !$this->getUser()->isLoggedIn()) {
+			$this->flashMessage("Nemáte potřebné oprávnění");
+			$this->redirect('Sign:in');
+			
+		}
+	}
+	public function renderShow(int $postId): void
+	{
+		$post = $this->facade->getPostById($postId);
+		$this->facade->addVisits($postId);
 
-public function renderShow(int $postId): void
-    {
-	$post = $this->facade->getPostById($postId);
-	 $this->facade->addVisits($postId);	
+		if (!$post) {
+			$this->error('Stránka nebyla nalezena');
+		}
 
-	if (!$post) {
-		$this->error('Stránka nebyla nalezena');
+		$this->template->post = $post;
+		$this->template->comments = $this->facade->getComments($postId);
 	}
 
-	$this->template->post = $post;
-	$this->template->comments = $this->facade->getComments($postId);
-    }  
+	protected function createComponentCommentForm(): Form
+	{
+		$form = new Form;
 
-protected function createComponentCommentForm(): Form
-    {
-	$form = new Form; 
+		$form->addText('name', 'Jméno:')
+			->setRequired();
 
-	$form->addText('name', 'Jméno:')
-		->setRequired();
+		$form->addEmail('email', 'E-mail:');
 
-	$form->addEmail('email', 'E-mail:');
+		$form->addTextArea('content', 'Komentář:')
+			->setRequired();
 
-	$form->addTextArea('content', 'Komentář:')
-		->setRequired();
+		$form->addSubmit('send', 'Publikovat komentář');
+		$form->onSuccess[] = [$this, 'commentFormSucceeded'];
+		return $form;
+	}
 
-	$form->addSubmit('send', 'Publikovat komentář');
-    $form->onSuccess[] = [$this, 'commentFormSucceeded'];
-	return $form;
-    }
+	public function commentFormSucceeded(\stdClass $data): void
+	{
+		$postId = $this->getParameter('postId');
 
-public function commentFormSucceeded(\stdClass $data): void
-    {
-	$postId = $this->getParameter('postId');
+		$this->facade->addComment($postId, $data);
 
-    $this->facade->addComment($postId, $data);
-
-	$this->flashMessage('Děkuji za komentář', 'success');
-	$this->redirect('this');
-    }
+		$this->flashMessage('Děkuji za komentář', 'success');
+		$this->redirect('this');
+	}
 }
