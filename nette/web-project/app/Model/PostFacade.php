@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 use Nette;
@@ -23,48 +24,66 @@ final class PostFacade
 	}
 
 	public function getPostById(int $postId)
-	{ $post = $this->database
-		->table('posts')
-		->get($postId);
-	  return $post;
+	{
+		$post = $this->database
+			->table('posts')
+			->get($postId);
+		return $post;
 	}
-	
+
 	public function getComments(int $postId)
-	{      return $this->database
-		      ->table('comments')
-		      ->where('post_id',$postId );
-	
+	{
+		return $this->database
+			->table('comments')
+			->where('post_id', $postId);
 	}
-	
+
 	public function editPost(int $postId, array $data)
 	{
 		$post = $this->database
-		        ->table('posts')
-		        ->get($postId);
+			->table('posts')
+			->get($postId);
 		$post->update($data);
-		    return $post;
-	
-    }
-	
+		return $post;
+	}
+
 	public function insertPost(array $data)
 	{
 		$post = $this->database
-                ->table('posts')
-                ->insert($data);
-			return $post;
+			->table('posts')
+			->insert($data);
+		return $post;
 	}
-	
-	public function addComment(int $postId, \stdClass $data)
-	{$this->database->table('comments')->insert([
-		'post_id' => $postId,
-		'name' => $data->name,
-		'email' => $data->email,
-		'content' => $data->content,]);}
 
-		public function addVisits(int $postId)
-		{$views = $this->database->table('posts')->get($postId)->views_count;
-			$views++;
-			$data["views_count"]=$views;
-			$this->database->table('posts')->get($postId)->update($data);
+	public function addComment(int $postId, \stdClass $data)
+	{
+		$this->database->table('comments')->insert([
+			'post_id' => $postId,
+			'name' => $data->name,
+			'email' => $data->email,
+			'content' => $data->content,
+		]);
+	}
+
+	public function addVisits(int $postId)
+	{
+		$views = $this->database->table('posts')->get($postId)->views_count;
+		$views++;
+		$data["views_count"] = $views;
+		$this->database->table('posts')->get($postId)->update($data);
+	}
+	public function updateRating(int $postId, int $userId,int $like)
+	{
+		$currentrating = $this->database->table('rating')->get(['user_id' => $userId, 'post_id' => $postId]);
+		if($currentrating != null)
+		{
+			$this->database->table('rating')->update(['like' => $like]);
 		}
+		else
+		{
+			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like' => $like]);
+		}
+		
+
+	}
 }

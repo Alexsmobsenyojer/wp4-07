@@ -12,6 +12,10 @@
   {if  $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else }<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
 		{/if} 
+
+<a n:href="Like! 1, $post->id ">Líbí se mi!</a>
+<a n:href="Like! 0, $post->id ">Nelíbí se mi!</a>
+
  <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>  
   <h2>Komentáře</h2>
 
