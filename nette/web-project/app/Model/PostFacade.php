@@ -83,7 +83,17 @@ final class PostFacade
 		{
 			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like' => $like]);
 		}
-		
-
+	}
+	public function getUserRating(int $postId, int $userId)
+	{
+		$like = $this->database->table('rating')->where(['user_id' => $userId, 'post_id' => $postId]);
+		if($like->count() == 0)
+		{
+			return null;
+		} 
+		else
+		{
+			return $like->fetch()->like;
+		}
 	}
 }

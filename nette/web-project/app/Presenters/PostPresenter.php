@@ -21,20 +21,16 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		if ($post->status == "ARCHIVED" && !$this->getUser()->isLoggedIn()) {
 			$this->flashMessage("Nemáte potřebné oprávnění");
 			$this->redirect('Sign:in');
-			
 		}
 	}
 	public function renderShow(int $postId): void
 	{
 		$post = $this->facade->getPostById($postId);
+		if (!$post) {$this->error('Stránka nebyla nalezena');}
 		$this->facade->addVisits($postId);
-
-		if (!$post) {
-			$this->error('Stránka nebyla nalezena');
-		}
-
 		$this->template->post = $post;
 		$this->template->comments = $this->facade->getComments($postId);
+		$this->template->like = $this->facade->getUserRating($postId, $this->getUser()->getId());
 	}
 
 	protected function createComponentCommentForm(): Form
@@ -63,19 +59,15 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');
 	}
-	public function handleLike(int $like,int $userId, int $postId ) 
+	public function handleLike(int $like, int $userId, int $postId)
 	{
-		if($this->getUser()->isLoggedIn())
-		{
+		if ($this->getUser()->isLoggedIn()) {
 			$userId = $this->getUser()->getId();
-			$this->facade->updateRating($postId,$userId,$like);
+			$this->facade->updateRating($postId, $userId, $like);
 			$this->redirect('this');
-		}
-		else
-		{
+		} else {
 			$this->flashMessage('Pro přidání hodnocení se musíte přihlásit', 'failed');
 			$this->redirect('Sign:in');
 		}
-		
 	}
 }
