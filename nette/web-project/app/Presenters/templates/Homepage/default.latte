@@ -1,30 +1,45 @@
 {block content}
 
-
-	<h1 n:block="title">Zpovědna</h1>
-<div class="row" >
-	
+   <div class="row mx-auto justify-content-center">
+	<h1 n:block="title" class="text-center text-warning">Zpovědna</h1>
 	{foreach $posts as $post}
-	<div class="post col-12 col-md-2 border border-warning rounded m-1" >
+	<div class="post col-12 col-md-3 border border-warning rounded m-1" >
 	{if $post->status!="ARCHIVED" || ($user->isLoggedIn())}
 	
 		<div class="date ">{$post->created_at|date:'F j, Y'}</div>
 
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
-
-		<div class="">{$post->content|truncate:256}</div>
-		{if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+        {if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
 		{/if}
-		
+		<div class="">{$post->content|truncate:20}</div>
 		<p>zobrazení:{$post->views_count}</p>
-		<a class="btn btn-warning" n:href="Post:show $post->id"> Více</a>
+		<a class="btn btn-warning mb-2" n:href="Post:show $post->id"> Více</a>
 	
 	{else} <div class="alert alert-warning">Archivovaný příspěvek</div>
     {/if}
 	</div>
 	{/foreach}
-	
+
+<div class="pagination justify-content-center">
+	{if !$paginator->isFirst()}
+		<a n:href="default, 1">První</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $paginator->page-1">Předchozí</a>
+		&nbsp;|&nbsp;
+	{/if}
+
+	Stránka {$paginator->getPage()} z {$paginator->getPageCount()}
+
+	{if !$paginator->isLast()}
+		&nbsp;|&nbsp;
+		<a n:href="default, $paginator->getPage() + 1">Další</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $paginator->getPageCount()">Poslední</a>
+	{/if}
+</div>
+
+	<a class="btn  text-info" n:href="Edit:create" n:if="$user->isLoggedIn()"> Napsat nový příspěvek</a>	
 </div>	
-	<a n:href="Edit:create" n:if="$user->isLoggedIn()">Napsat nový příspěvek</a>
+	
 {/block}

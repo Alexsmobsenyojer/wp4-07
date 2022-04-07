@@ -18,11 +18,19 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 		#$this->userFacade = $userFacade;
 	}
 
-	public function renderDefault(): void
+	public function renderDefault(int $page = 1): void
 	{
+		$articlesCount = $this->facade->getPublishedArticlesCount();
+		$paginator = new Nette\Utils\Paginator;
+		$paginator->setItemCount($articlesCount);
+		$paginator->setItemsPerPage(3);
+		$paginator->setPage($page);
 		#$this->userFacade->add("Admin", "admin@ossp.cz", "secret");
-		$this->template->posts = $this->facade
-			->getPublicArticles()
-			->limit(5);
+		#$this->template->posts = $this->facade
+		#	->getPublicArticles()
+		#	->limit(8);
+		$posts = $this->facade->getPublicArticles($paginator->getLength(), $paginator->getOffset());
+	    $this->template->posts = $posts;
+		$this->template->paginator = $paginator;	
 	}
 }

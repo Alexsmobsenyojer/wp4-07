@@ -51,7 +51,7 @@ public function postFormSucceeded($form, $data): void
     {
         $postId = $this->getParameter('postId');
 
-		if (true) { //kdyz je soubor skutecne poslan z formu
+		if ($data->image->hasFile()) { //kdyz je soubor skutecne poslan z formu
 			if ($data->image->isOk()) { //prejmenovani souboru
 			$data->image->move('upload/'. $data->image->getSanitizedName());
 			$data['image'] = ('upload/'. $data->image->getSanitizedName());

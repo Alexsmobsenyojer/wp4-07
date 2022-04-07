@@ -10,28 +10,46 @@
 </head>
 
 <body style="background-color:var(--color);">
+
 <div class="container mx-auto">
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-<ul class="navig" >
-	<li><a n:href="Homepage:">Hlavní strana</a></li>
-	{if $user->isLoggedIn()}
-		<li><a n:href="Sign:out">Odhlásit</a></li>
-	{else}
-		<li><a n:href="Sign:in">Přihlásit</a></li>
-	{/if}
-	    
-		<button type="button" onclick="colorrr()">Změnit barvu pozadí</button>
-</ul>
+
+<header class="navig p-3 bg-dark text-white rounded-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+           <img class="me-2" width="40" height="40" src="https://img.icons8.com/emoji/48/000000/smiling-face-with-horns.png"/> 
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a n:href="Homepage:" class="nav-link px-2 text-white">Hlavní strana</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+		{if $user->isLoggedIn()}
+          <a n:href="Sign:out" class="btn btn-outline-light me-2">Odhlásit</a>
+		{else}
+		  <a n:href="Sign:in" class="btn btn-warning">Přihlásit</a>
+	    {/if}
+          <button type="button" class="btn btn-info" onclick="colorrr()">Změnit barvu pozadí</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
 	{include content}
 </div>
-	{block scripts}
-	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
-	{/block}
+
+{block scripts}
+<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+{/block}
 <script>
 function colorrr()
 { const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
-
 document.documentElement.style.setProperty('--color', randomColor); }
 </script>
 </body>
