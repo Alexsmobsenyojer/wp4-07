@@ -89,6 +89,7 @@ public function postFormSucceeded($form, $data): void
   {$data["image"]= null;
 	  $this->facade->editPost($postId, $data);
 	  $this->flashMessage("Obrázek byl smazán");
+	  $this->redrawControl("image");
    #$this->redirect("Post:show",$postId);
   }
 

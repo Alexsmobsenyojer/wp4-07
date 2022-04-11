@@ -2,6 +2,9 @@
 <h1>Upravit příspěvek</h1>
 
 {control postForm}
+{snippet image}
 {if  $post->image }
-<a n:href="Delete! $post->id">odstranit obrázek </a>
+<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+<a n:href="Delete! $post->id" class="ajax">odstranit obrázek </a>
 {/if} 
+{/snippet}
