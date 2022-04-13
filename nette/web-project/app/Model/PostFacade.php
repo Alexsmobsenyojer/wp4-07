@@ -65,9 +65,11 @@ final class PostFacade
 
 	public function deletePost(int $postId)
 	{
-		$post = $this->database
-			->table('posts')
-			->get($postId);
+		$likes= $this->database->table('rating')->where(['post_id' => $postId]);
+		$likes->delete();
+		$comments= $this->database->table('comments')->where(['post_id' => $postId]);
+		$comments->delete();
+		$post = $this->database->table('posts')->get($postId);
 		$post->delete();
 	}
 
