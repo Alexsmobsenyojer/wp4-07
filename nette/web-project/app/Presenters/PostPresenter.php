@@ -64,7 +64,8 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		if ($this->getUser()->isLoggedIn()) {
 			$userId = $this->getUser()->getId();
 			$this->facade->updateRating($postId, $userId, $like);
-			$this->redirect('this');
+			#$this->redirect('this');
+			$this->redrawControl("likey");
 		} else {
 			$this->flashMessage('Pro přidání hodnocení se musíte přihlásit', 'failed');
 			$this->redirect('Sign:in');

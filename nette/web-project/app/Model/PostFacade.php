@@ -85,7 +85,9 @@ final class PostFacade
 		$currentrating = $this->database->table('rating')->get(['user_id' => $userId, 'post_id' => $postId]);
 		if($currentrating != null)
 		{
-			$this->database->table('rating')->update(['like' => $like]);
+			$this->database
+                ->query('UPDATE rating SET like_val = ? WHERE user_id = ? AND post_id = ?',
+                 $like, $userId, $postId);
 		}
 		else
 		{
@@ -101,7 +103,7 @@ final class PostFacade
 		} 
 		else
 		{
-			return $like->fetch()->like;
+			return $like->fetch()->like_val;
 		}
 	}
 
