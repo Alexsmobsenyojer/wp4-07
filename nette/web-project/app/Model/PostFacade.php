@@ -91,7 +91,7 @@ final class PostFacade
 		}
 		else
 		{
-			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like' => $like]);
+			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like_val' => $like]);
 		}
 	}
 	public function getUserRating(int $postId, int $userId)

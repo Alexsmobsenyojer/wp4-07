@@ -59,7 +59,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');
 	}
-	public function handleLike(int $like, int $userId, int $postId)
+	public function handleLike(int $like, int $postId)
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			$userId = $this->getUser()->getId();
