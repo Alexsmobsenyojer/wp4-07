@@ -63,6 +63,14 @@ final class PostFacade
 		return $post;
 	}
 
+	public function deletePost(int $postId)
+	{
+		$post = $this->database
+			->table('posts')
+			->get($postId);
+		$post->delete();
+	}
+
 	public function addComment(int $postId, \stdClass $data)
 	{
 		$this->database->table('comments')->insert([

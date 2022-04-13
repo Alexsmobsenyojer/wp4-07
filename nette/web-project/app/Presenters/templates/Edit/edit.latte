@@ -5,6 +5,7 @@
 {snippet image}
 {if  $post->image }
 <img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-<a n:href="Delete! $post->id" class="ajax">odstranit obrázek </a>
+<a n:href="Delete! $post->id" class="ajax">odstranit obrázek</a>
 {/if} 
 {/snippet}
+<a n:href="DeletePost! $post->id" >smazat příspěvek</a>

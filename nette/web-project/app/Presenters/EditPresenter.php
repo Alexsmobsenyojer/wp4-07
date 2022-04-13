@@ -92,5 +92,10 @@ public function postFormSucceeded($form, $data): void
 	  $this->redrawControl("image");
    #$this->redirect("Post:show",$postId);
   }
+  public function handleDeletePost(int $postId)
+  {   $this->facade->deletePost($postId);
+	  $this->flashMessage("Příspěvek byl smazán");
+	  $this->redirect("Homepage:default");
+  }
 
 }
