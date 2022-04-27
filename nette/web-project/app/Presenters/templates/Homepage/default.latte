@@ -17,12 +17,12 @@
     {/if}	
 	</div>
 	{/foreach}
-
+{snippet pagination}
 <div class="pagination justify-content-center">
 	{if !$paginator->isFirst()}
-		<a n:href="default, 1">První</a>
+		<a n:href="default, 1" class="ajax">První</a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->page-1">Předchozí</a>
+		<a n:href="default, $paginator->page-1" class="ajax">Předchozí</a>
 		&nbsp;|&nbsp;
 	{/if}
 
@@ -30,12 +30,12 @@
 
 	{if !$paginator->isLast()}
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPage() + 1">Další</a>
+		<a n:href="default, $paginator->getPage() + 1" class="ajax">Další</a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPageCount()">Poslední</a>
+		<a n:href="default, $paginator->getPageCount()" class="ajax">Poslední</a>
 	{/if}
 </div>
-
+{/snippet}
 	<a class="btn  text-info" n:href="Edit:create" n:if="$user->isLoggedIn()"> Napsat nový příspěvek</a>	
 </div>	
 	
