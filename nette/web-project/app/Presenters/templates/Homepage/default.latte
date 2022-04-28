@@ -1,11 +1,11 @@
 {block content}
-
+{snippet paginator}
    <div class="row mx-auto justify-content-center">
-	<h1 n:block="title" class="text-center text-warning">Zpovědna</h1>
+	<h1 n:block="title" class="text-center text-warning">Zpovědna</h1>		
 	{foreach $posts as $post}
-	<div class="post col-12 col-md-3 border border-warning rounded m-1" >
+	<div class="post row col-12 col-md-3 border border-warning rounded m-1" >
 	{if $post->status!="ARCHIVED" || ($user->isLoggedIn())}
-		<div class="date ">{$post->created_at|date:'F j, Y'}</div>
+		<div class="date">{$post->created_at|date:'F j, Y'}</div>
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
         {if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
@@ -17,22 +17,21 @@
     {/if}	
 	</div>
 	{/foreach}
-{snippet pagination}
 <div class="pagination justify-content-center">
 	{if !$paginator->isFirst()}
-		<a n:href="default, 1" class="ajax">První</a>
+		<a n:href="default, 1" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/double-left-arrow.png"></a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->page-1" class="ajax">Předchozí</a>
+		<a n:href="default, $paginator->page-1" class="ajax"> <img class= "img-fluid" width="20" src="{$basePath}/upload/left-arrow.png"></a>
 		&nbsp;|&nbsp;
 	{/if}
 
-	Stránka {$paginator->getPage()} z {$paginator->getPageCount()}
+	<b>Stránka {$paginator->getPage()} z {$paginator->getPageCount()}</b>
 
 	{if !$paginator->isLast()}
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPage() + 1" class="ajax">Další</a>
+		<a n:href="default, $paginator->getPage() + 1" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/right-arrow.png"></a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPageCount()" class="ajax">Poslední</a>
+		<a n:href="default, $paginator->getPageCount()" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/double-right-arrow.png"></a>
 	{/if}
 </div>
 {/snippet}

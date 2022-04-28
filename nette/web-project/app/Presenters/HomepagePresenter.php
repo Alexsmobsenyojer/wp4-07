@@ -32,6 +32,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 		$posts = $this->facade->getPublicArticles($paginator->getLength(), $paginator->getOffset());
 	    $this->template->posts = $posts;
 		$this->template->paginator = $paginator;	
+		$this->redrawControl("paginator");
 	}
 	public function handleShowRndNmr()
 	{ $this->template->number = rand(1, 100); $this->redrawControl("randomNumber"); }
