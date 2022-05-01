@@ -18,17 +18,17 @@
 {/snippet}
  <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn()" class="m-5">Upravit příspěvek</a>  
   <h2>Komentáře</h2>
-
+{snippet comm}
   <div class="comments">
 	{foreach $comments as $comment}
 		<p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">
 			{$comment->name}
 		</a></b> napsal:</p>
-
 		<div>{$comment->content}</div>
+    <a n:href="DeleteComment! $comment->id" class="ajax" >Smazat Komentář</a>
 	{/foreach}
   </div>
-  
+  {/snippet}
   {if $post->status=="OPEN" || ($user->isLoggedIn() && $post->status=="CLOSED")}
   <h2> Nový Komentář</h2>
   {control commentForm}

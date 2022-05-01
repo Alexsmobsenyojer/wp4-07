@@ -82,7 +82,12 @@ final class PostFacade
 			'content' => $data->content,
 		]);
 	}
-
+	public function getComment(int $commentId)
+	{
+		return $this->database->table('comments')->where(['id' => $commentId]);
+		
+	}
+   
 	public function addVisits(int $postId)
 	{
 		$views = $this->database->table('posts')->get($postId)->views_count;

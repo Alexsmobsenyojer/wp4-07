@@ -71,4 +71,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 			$this->redirect('Sign:in');
 		}
 	}
+	public function handleDeleteComment(int $commentId)
+	{
+	  $this->facade->getComment($commentId)->delete();
+	  $this->redrawControl("comm");	
+	}
 }
