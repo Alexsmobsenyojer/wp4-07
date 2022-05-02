@@ -48,12 +48,16 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 		;
 
 		$form->addSubmit('send', 'Potvrdit krví');
-
 		$form->onSuccess[] = [$this, 'signUpFormSucceeded'];
 		return $form;
 	}
 	public function signUpFormSucceeded(Form $form, \stdClass $data): void
 	{
+	if ($this->getUser()->isLoggedIn()) { $userId = $this->getUser()->getId();
+			$this->userfacade->change($data->username, $data->email, $data->password, $userId);
+			$this->flashMessage('Uživatel byl úspěšně upraven.', 'success');
+		} 
+	else {	
 		try {
 			$this->userfacade->add($data->username, $data->email, $data->password);
 			$this->flashMessage('Úspěšně jste se zaregistrovali.');
@@ -61,6 +65,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 		} catch (Nette\Security\AuthenticationException $e) {
 			$form->addError('IMPOSTER.');
 		}
+	    }
 	}
 	public function actionOut(): void
 	{
