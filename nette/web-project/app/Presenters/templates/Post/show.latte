@@ -25,7 +25,7 @@
 			{$comment->name}
 		</a></b> napsal:</p>
 		<div>{$comment->content}</div>
-    {if (dump($user->isLoggedIn() && $user->isInRole('admin')))}
+    {if ($user->isLoggedIn() && $user->isInRole('admin'))}
     <a n:href="DeleteComment! $comment->id" class="ajax" >Smazat Komentář</a>
     {else} {/if}
 	{/foreach}

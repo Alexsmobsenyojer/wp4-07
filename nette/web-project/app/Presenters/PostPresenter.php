@@ -26,7 +26,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	public function renderShow(int $postId): void
 	{
 		$post = $this->facade->getPostById($postId);
-		if (!$post) {$this->error('Stránka nebyla nalezena');}
+		if (!$post) {
+			$this->error('Stránka nebyla nalezena');
+		}
 		$this->facade->addVisits($postId);
 		$this->template->post = $post;
 		$this->template->comments = $this->facade->getComments($postId);
@@ -36,11 +38,13 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	protected function createComponentCommentForm(): Form
 	{
 		$form = new Form;
+		if ($this->getUser()->isLoggedIn()) {
+		} else {
+			$form->addText('name', 'Jméno:')
+				->setRequired();
 
-		$form->addText('name', 'Jméno:')
-			->setRequired();
-
-		$form->addEmail('email', 'E-mail:');
+			$form->addEmail('email', 'E-mail:');
+		}
 
 		$form->addTextArea('content', 'Komentář:')
 			->setRequired();
@@ -53,9 +57,13 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	public function commentFormSucceeded(\stdClass $data): void
 	{
 		$postId = $this->getParameter('postId');
-
-		$this->facade->addComment($postId, $data);
-
+		$logged = $this->getUser()->isLoggedIn();
+		if ($logged == true) {
+			$userId = $this->getUser()->getId();
+			$this->facade->addComment($postId, $data, $logged, $userId);
+		} else {
+			$this->facade->addComment($postId, $data, $logged, null);
+		}
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');
 	}
@@ -73,7 +81,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	}
 	public function handleDeleteComment(int $commentId)
 	{
-	  $this->facade->getComment($commentId)->delete();
-	  $this->redrawControl("comm");	
+		$this->facade->getComment($commentId)->delete();
+		$this->redrawControl("comm");
 	}
 }

@@ -17,13 +17,16 @@ final class PostFacade
 
 	public function getPublicArticles(int $limit, int $offset): Nette\Database\ResultSet
 	{
-		return $this->database->query('
+		return $this->database->query(
+			'
 			SELECT * FROM posts
 			WHERE created_at < ?
 			ORDER BY created_at DESC
 			LIMIT ?
 			OFFSET ?',
-			new \DateTime, $limit, $offset
+			new \DateTime,
+			$limit,
+			$offset
 		);
 		#return $this->database
 		#	->table('posts')
@@ -65,29 +68,38 @@ final class PostFacade
 
 	public function deletePost(int $postId)
 	{
-		$likes= $this->database->table('rating')->where(['post_id' => $postId]);
+		$likes = $this->database->table('rating')->where(['post_id' => $postId]);
 		$likes->delete();
-		$comments= $this->database->table('comments')->where(['post_id' => $postId]);
+		$comments = $this->database->table('comments')->where(['post_id' => $postId]);
 		$comments->delete();
 		$post = $this->database->table('posts')->get($postId);
 		$post->delete();
 	}
 
-	public function addComment(int $postId, \stdClass $data)
+	public function addComment(int $postId, \stdClass $data, $logged, $userId)
 	{
-		$this->database->table('comments')->insert([
-			'post_id' => $postId,
-			'name' => $data->name,
-			'email' => $data->email,
-			'content' => $data->content,
-		]);
+		if ($logged == true) {
+			$user = $this->database->table('users')->get($userId);
+			$this->database->table('comments')->insert([
+				'post_id' => $postId,
+				'name' => $user->username,
+				'email' => $user->email,
+				'content' => $data->content,
+			]);
+		} else {
+			$this->database->table('comments')->insert([
+				'post_id' => $postId,
+				'name' => $data->name,
+				'email' => $data->email,
+				'content' => $data->content,
+			]);
+		}
 	}
 	public function getComment(int $commentId)
 	{
 		return $this->database->table('comments')->where(['id' => $commentId]);
-		
 	}
-   
+
 	public function addVisits(int $postId)
 	{
 		$views = $this->database->table('posts')->get($postId)->views_count;
@@ -95,29 +107,27 @@ final class PostFacade
 		$data["views_count"] = $views;
 		$this->database->table('posts')->get($postId)->update($data);
 	}
-	public function updateRating(int $postId, int $userId,int $like)
+	public function updateRating(int $postId, int $userId, int $like)
 	{
 		$currentrating = $this->database->table('rating')->get(['user_id' => $userId, 'post_id' => $postId]);
-		if($currentrating != null)
-		{
+		if ($currentrating != null) {
 			$this->database
-                ->query('UPDATE rating SET like_val = ? WHERE user_id = ? AND post_id = ?',
-                 $like, $userId, $postId);
-		}
-		else
-		{
+				->query(
+					'UPDATE rating SET like_val = ? WHERE user_id = ? AND post_id = ?',
+					$like,
+					$userId,
+					$postId
+				);
+		} else {
 			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like_val' => $like]);
 		}
 	}
 	public function getUserRating(int $postId, int $userId)
 	{
 		$like = $this->database->table('rating')->where(['user_id' => $userId, 'post_id' => $postId]);
-		if($like->count() == 0)
-		{
+		if ($like->count() == 0) {
 			return null;
-		} 
-		else
-		{
+		} else {
 			return $like->fetch()->like_val;
 		}
 	}

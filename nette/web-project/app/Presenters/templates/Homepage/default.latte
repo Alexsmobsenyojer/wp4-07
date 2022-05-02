@@ -19,9 +19,9 @@
 	{/foreach}
 <div class="pagination justify-content-center">
 	{if !$paginator->isFirst()}
-		<a n:href="default, 1" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/double-left-arrow.png"></a>
+		<a n:href="default, 1" class="ajax"><img class= "ajax img-fluid" width="20" src="{$basePath}/upload/double-left-arrow.png"></a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->page-1" class="ajax"> <img class= "img-fluid" width="20" src="{$basePath}/upload/left-arrow.png"></a>
+		<a n:href="default, $paginator->page-1" class="ajax"> <img class= "ajax img-fluid" width="20" src="{$basePath}/upload/left-arrow.png"></a>
 		&nbsp;|&nbsp;
 	{/if}
 
@@ -29,9 +29,9 @@
 
 	{if !$paginator->isLast()}
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPage() + 1" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/right-arrow.png"></a>
+		<a n:href="default, $paginator->getPage() + 1" class="ajax"><img class= "ajax img-fluid" width="20" src="{$basePath}/upload/right-arrow.png"></a>
 		&nbsp;|&nbsp;
-		<a n:href="default, $paginator->getPageCount()" class="ajax"><img class= "img-fluid" width="20" src="{$basePath}/upload/double-right-arrow.png"></a>
+		<a n:href="default, $paginator->getPageCount()" class="ajax"><img class= "ajax img-fluid" width="20" src="{$basePath}/upload/double-right-arrow.png"></a>
 	{/if}
 </div>
 {/snippet}
