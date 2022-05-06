@@ -17,6 +17,7 @@
     {/if}	
 	</div>
 	{/foreach}
+	
 <div class="pagination justify-content-center">
 	{if !$paginator->isFirst()}
 		<a n:href="default, 1" class="ajax"><img class= "ajax img-fluid" width="20" src="{$basePath}/upload/double-left-arrow.png"></a>
@@ -35,7 +36,7 @@
 	{/if}
 </div>
 {/snippet}
-	<a class="btn  text-info" n:href="Edit:create" n:if="$user->isLoggedIn()"> Napsat nový příspěvek</a>	
+
 </div>	
 	
 {/block}
