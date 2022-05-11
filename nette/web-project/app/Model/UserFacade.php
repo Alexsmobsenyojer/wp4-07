@@ -78,18 +78,28 @@ final class UserFacade implements Nette\Security\Authenticator
 			throw new DuplicateNameException;
 		}
 	}
-	public function change(string $username, string $email, string $password, $userId): void
+	public function changeemail(string $email, $userId): void
 	{
 		#Nette\Utils\Validators::assert($email, 'email');
 		#try { 
 			$this->database->table(self::TABLE_NAME)->where(['id' => $userId])->update([
-				self::COLUMN_NAME => $username,
-				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
 				self::COLUMN_EMAIL => $email,
-			]);
+			]);			
 		#} catch (Nette\Database\UniqueConstraintViolationException $e) {
 		#	throw new DuplicateNameException;
 		#}
+	}
+	public function changepass(string $password, $userId): void
+	{
+		$this->database->table(self::TABLE_NAME)->where(['id' => $userId])->update([			
+			self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password)			
+		]);
+	}
+	public function changename(string $username, $userId): void
+	{
+		$this->database->table(self::TABLE_NAME)->where(['id' => $userId])->update([
+			self::COLUMN_NAME => $username
+		]);		
 	}
 }
 

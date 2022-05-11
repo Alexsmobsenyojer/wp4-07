@@ -44,8 +44,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 			->setRequired('Zadejte váš e-mail.');
 		$form->addPassword('password', 'Heslo:')
 			->setRequired('Vytvořte si své heslo.')
-			->addRule(Form::MIN_LENGTH, 'Minimální délka hesla je %d znaků', 6)
-		;
+			->addRule(Form::MIN_LENGTH, 'Minimální délka hesla je %d znaků', 6);
 
 		$form->addSubmit('send', 'Potvrdit krví');
 		$form->onSuccess[] = [$this, 'signUpFormSucceeded'];
@@ -66,11 +65,63 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 			$form->addError('IMPOSTER.');
 		}
 	    }
+		
 	}
+	protected function createComponentEditNameForm(): Form
+	{
+		$form = new Form;
+		$form->addText('username', 'Nová Přezdívka:')
+			->setRequired('Vytvořte si své uživatelské jméno.');
+		$form->addSubmit('send', 'Změnit jméno');
+		$form->onSuccess[] = [$this, 'editNameFormSucceeded'];
+		return $form;
+	}
+	public function editNameFormSucceeded(Form $form, \stdClass $data): void
+	{
+	$userId = $this->getUser()->getId();
+	$this->userfacade->changename($data->username, $userId);
+	$this->flashMessage('Přezdívka byla úspěšně změněna.', 'success');
+	$this->getUser()->logout();
+	$this->redirect('Sign:in');
+	}
+	protected function createComponentEditEmailForm(): Form
+	{
+		$form = new Form;
+		$form->addEmail('email', 'Nový E-mail:')
+			->setRequired('Zadejte váš e-mail.');
+		$form->addSubmit('send', 'Změnit e-mail');
+		$form->onSuccess[] = [$this, 'editEMailFormSucceeded'];
+		return $form; 
+	}
+	public function editEMailFormSucceeded(Form $form, \stdClass $data): void
+	{
+	$userId = $this->getUser()->getId();
+	$this->userfacade->changeemail($data->email, $userId);
+	$this->flashMessage('Email byl úspěšně změněn.', 'success');
+	$this->redirect('Sign:in');
+	}
+	protected function createComponentEditPassForm(): Form
+	{
+		$form = new Form;
+		$form->addPassword('password', 'Nové Heslo:')
+			->setRequired('Vytvořte si své heslo.')
+			->addRule(Form::MIN_LENGTH, 'Minimální délka hesla je %d znaků', 6);
+		$form->addSubmit('send', 'Změnit heslo');
+		$form->onSuccess[] = [$this, 'editPassFormSucceeded'];
+		return $form;
+	}
+	public function editPassFormSucceeded(Form $form, \stdClass $data): void
+	{
+	$userId = $this->getUser()->getId();
+	$this->userfacade->changename($data->password, $userId);
+	$this->flashMessage('Heslo bylo úspěšně změněno.', 'success');
+	$this->redirect('Sign:in');
+	}
+	
 	public function actionOut(): void
 	{
 		$this->getUser()->logout();
-		$this->flashMessage('Miss you so much');
+		$this->flashMessage('Byl jste odhlášen Miss you so much');
 		$this->redirect('Homepage:');
 	}
 }

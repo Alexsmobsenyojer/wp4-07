@@ -1,4 +1,5 @@
 {block content}
+{snippet information}  
 <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
@@ -6,14 +7,15 @@
         <div class="card my-3" style="background:rgba(248, 240, 227, 0.9)">
             <div class="text-center">
               <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
-                width="100px" alt="profile"> <br>
-                Vaše přezdívka: {$user->identity->data["username"]}<br>Váš email: {$user->identity->data["email"]}<br>
-                <p>údaje které nechcete změnit napište stávající</p>
+                width="100px" alt="profile"> <br>              
+                Vaše přezdívka: {$user->identity->data["username"]}<br>Váš email: {$user->identity->data["email"]}<br>               
             </div>
-            <div class="mx-3">{control signUpForm}</div>
-            <div id="emailHelp" class="form-text text-center mb-3 text-dark">Máte již účet? <a n:href="Sign:in" class="text-dark fw-bold">Přihlásit se</a>
-            </div>       
+            <div class="mx-3">{control editNameForm}</div>
+            <div class="mx-3">{control editEmailForm}</div>
+            <div class="mx-3">{control editPassForm}</div>
+            </div>                  
         </div>
       </div>
     </div>
   </div>
+{/snippet} 
