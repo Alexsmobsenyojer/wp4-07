@@ -98,6 +98,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	$userId = $this->getUser()->getId();
 	$this->userfacade->changeemail($data->email, $userId);
 	$this->flashMessage('Email byl úspěšně změněn.', 'success');
+	$this->getUser()->logout();
 	$this->redirect('Sign:in');
 	}
 	protected function createComponentEditPassForm(): Form
@@ -115,6 +116,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	$userId = $this->getUser()->getId();
 	$this->userfacade->changename($data->password, $userId);
 	$this->flashMessage('Heslo bylo úspěšně změněno.', 'success');
+	$this->getUser()->logout();
 	$this->redirect('Sign:in');
 	}
 	
