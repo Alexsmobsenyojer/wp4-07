@@ -1,11 +1,21 @@
 {block content}
-<h1>Upravit příspěvek</h1>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-3">Upravit příspěvek</h2>
+        <div class="card my-3" style="background:rgba(248, 240, 227, 0.9)">
+           <div class="mx-5 my-3">{control postForm}
+            {snippet image}
+            {if  $post->image }
+            <a n:href="Delete! $post->id" class="ajax">odstranit obrázek</a>
+            <img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+            {/if} 
+            {/snippet}
+            <a n:href="DeletePost! $post->id" >smazat příspěvek</a>
+           </div>       
+        </div>
+      </div>
+    </div>
+  </div>
 
-{control postForm}
-{snippet image}
-{if  $post->image }
-<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-<a n:href="Delete! $post->id" class="ajax">odstranit obrázek</a>
-{/if} 
-{/snippet}
-<a n:href="DeletePost! $post->id" >smazat příspěvek</a>
+

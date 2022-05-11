@@ -9,15 +9,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/naja@2/dist/Naja.min.js"></script>
   <script> naja.initialize(); </script>
-  <style>a:hover { color: purple;} body{ cursor: src(""), auto;} header{ background:rgba(75,25,85,0.7);}</style>
+  <style>a:hover { color: purple;} body{ cursor: src(""), auto;} header{ background:rgba(75,25,85,0.7);} footer { background:rgba(75,25,85,0.5);border:outset;}</style>
 </head>
 
 <body style="background-color:var(--color);">
 
-<div class="container mx-auto">
+<div class="container mx-auto mb-3">
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-<header class="navig p-4 text-white rounded mt-1">
+<header class="navig p-4 text-white rounded my-2">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -57,8 +57,7 @@
 
 	{include content}
 </div>
-
- 
+<footer class="text-center"><br><p>Yena Jigumi©2022 </p></footer>
 {block scripts}
 <script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
 {/block}
