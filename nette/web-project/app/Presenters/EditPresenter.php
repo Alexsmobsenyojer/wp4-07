@@ -41,6 +41,8 @@ protected function createComponentPostForm(): Form
         ];
     $form->addSelect('status', 'Stav:', $statuses)
          ->setDefaultValue('OPEN');
+	$categories= $this->facade->getCategories()->fetchPairs('id', 'name');
+    $form->addSelect('category_id', 'Kategorie:', $categories);
 	$form->addSubmit('send', 'Uložit a publikovat');
 	$form->onSuccess[] = [$this, 'postFormSucceeded'];
 
@@ -62,9 +64,8 @@ public function postFormSucceeded($form, $data): void
 			//$this->redirect('this');
 			}
 
-		if ($postId) {
-            $post=$this->facade->editPost($postId,(array) $data);} 
-			else {$post=$this->facade->insertPost((array)$data);}
+		if ($postId) {$post=$this->facade->editPost($postId,(array) $data);} 
+		else {$post=$this->facade->insertPost((array)$data);}
 
 		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
 	    $this->redirect('Post:show', $post->id);

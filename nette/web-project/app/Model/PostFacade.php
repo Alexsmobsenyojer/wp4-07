@@ -19,7 +19,8 @@ final class PostFacade
 	{
 		return $this->database->query(
 			'
-			SELECT * FROM posts
+			SELECT p.id, p.title, p.content, p.views_count, p.created_at, p.status, p.image,c.id AS category_id, c.name AS category_name  FROM posts p
+			LEFT JOIN categories c ON p.category_id = c.id
 			WHERE created_at < ?
 			ORDER BY created_at DESC
 			LIMIT ?
@@ -135,5 +136,13 @@ final class PostFacade
 	public function getPublishedArticlesCount(): int
 	{
 		return $this->database->fetchField('SELECT COUNT(*) FROM posts WHERE created_at < ?', new \DateTime);
+	}
+	public function getCategories()
+	{
+		return $this->database->table('categories');
+	}
+	public function getCategory($categoryId)
+	{
+		return $this->database->table('categories')->get($categoryId);
 	}
 }

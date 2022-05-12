@@ -11,7 +11,8 @@
 		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
 		{/if}
 		<div class="">{$post->content|truncate:20}</div>
-		<p>zobrazení:{$post->views_count}</p>	
+		<p>zobrazení: {$post->views_count}</p>
+		<p>kategorie: {if $post->category_id}{$post->category_name}{else} Žádná{/if}</p>	
 		<a class="btn btn-warning mb-2 " n:href="Post:show $post->id"> Více</a>	
 	{else} <div class="alert alert-warning">Archivovaný příspěvek</div>
     {/if}	
