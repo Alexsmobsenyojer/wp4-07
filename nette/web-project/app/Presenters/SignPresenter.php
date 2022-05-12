@@ -119,7 +119,26 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	$this->getUser()->logout();
 	$this->redirect('Sign:in');
 	}
-	
+	protected function createComponentPfpForm(): Form
+	{
+	$form = new Form;
+	$form->addUpload('image', 'Soubor')
+	    ->setRequired()
+		->addRule(Form::IMAGE, 'Profile picture must be JPEG, PNG or GIF');
+		$form->addSubmit('send', 'Změnit Profilový obrázek');
+		$form->onSuccess[] = [$this, 'PfpFormSucceeded'];
+		return $form;
+	}
+	public function pfpFormSucceeded(Form $form, \stdClass $data): void
+	{
+	$userId = $this->getUser()->getId();
+	$data->image->move('upload/'. $data->image->getSanitizedName());
+	$data->image = ('upload/'. $data->image->getSanitizedName());
+	$this->userfacade->changepfp($data->image, $userId);
+	$this->flashMessage('Profilový obrázek byl změněn.', 'success');
+	$this->getUser()->logout();
+	$this->redirect('Sign:in');
+	}
 	public function actionOut(): void
 	{
 		$this->getUser()->logout();

@@ -35,7 +35,7 @@
 		{if $user->isLoggedIn()}
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" alt="mdo" width="48" height="48" class="rounded-circle">
+            <img src="{$basePath}/{$user->identity->data["pfp"]}" alt="mdo" width="48" height="48" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" n:href="Edit:create">Napsat nový příspěvek</a></li>

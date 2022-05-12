@@ -1,7 +1,7 @@
 {block content}
 <div class="row d-flex justify-content-center">
-<p><a n:href="Homepage:default">← zpět</a></p>
 <div class="post w-75">
+<p><a n:href="Homepage:default">← zpět</a></p>
 {if ($post->status=="OPEN") || ($post->status=="CLOSED ") || ($post->status=="ARCHIVED" && $user->isLoggedIn())}
   <h1 n:block="title" class="text-center">{$post->title}</h1>
   <div class="date">{$post->created_at|date:'F j, Y'} {$post->status}</div>
@@ -30,11 +30,11 @@
   {foreach $comments as $comment}      
         <div class="card mb-4">
           <div class="card-body">
-            <p>{$comment->content}</p>
+            <p>{$comment->content}</p> 
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-row align-items-center">
-                <img src="{$basePath}/upload/user.png" alt="avatar" width="25"
-                  height="25" />
+              {if $comment->user_id} <img src="{$basePath}/{$comment->user_pfp}" class="rounded-circle" alt="avatar" width="25" height="25" />
+              {else}  <img src="{$basePath}/upload/user.png" alt="avatar" width="25" height="25" /> {/if}
                 <p class="small mb-0 ms-2"><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">	{$comment->name}	</a></b> napsal:</p>
               </div>
               {if ($user->isLoggedIn() && $user->isInRole('admin'))}

@@ -18,8 +18,8 @@ final class UserFacade implements Nette\Security\Authenticator
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
 		COLUMN_EMAIL = 'email',
-		COLUMN_ROLE = 'role';
-
+		COLUMN_ROLE = 'role',
+        COLUMN_PFP = 'pfp';
 
 	private Nette\Database\Explorer $database;
 
@@ -99,6 +99,12 @@ final class UserFacade implements Nette\Security\Authenticator
 	{
 		$this->database->table(self::TABLE_NAME)->where(['id' => $userId])->update([
 			self::COLUMN_NAME => $username
+		]);		
+	}
+	public function changepfp( $pfp, $userId): void
+	{
+		$this->database->table(self::TABLE_NAME)->where(['id' => $userId])->update([
+			self::COLUMN_PFP => $pfp
 		]);		
 	}
 }

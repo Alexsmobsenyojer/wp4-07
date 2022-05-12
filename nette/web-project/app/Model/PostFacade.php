@@ -45,9 +45,15 @@ final class PostFacade
 
 	public function getComments(int $postId)
 	{
-		return $this->database
-			->table('comments')
-			->where('post_id', $postId);
+		#return $this->database
+			#->table('comments')
+			#->where('post_id', $postId);
+			return $this->database->query(
+				'
+				SELECT c.id, c.content, c.email, c.name, u.id AS user_id, u.pfp AS user_pfp  FROM comments c
+				LEFT JOIN users u ON c.user_id = u.id
+				WHERE post_id  = ?',$postId
+			);
 	}
 
 	public function editPost(int $postId, array $data)
@@ -86,6 +92,7 @@ final class PostFacade
 				'name' => $user->username,
 				'email' => $user->email,
 				'content' => $data->content,
+				'user_id' => $userId
 			]);
 		} else {
 			$this->database->table('comments')->insert([
@@ -145,4 +152,5 @@ final class PostFacade
 	{
 		return $this->database->table('categories')->get($categoryId);
 	}
+
 }
