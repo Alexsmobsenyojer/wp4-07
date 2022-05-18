@@ -6,10 +6,10 @@
   <h1 n:block="title" class="text-center">{$post->title}</h1>
   <div class="date">{$post->created_at|date:'F j, Y'} {$post->status}</div>
   <p>zobrazení:{$post->views_count}</p>
-  <p>Kategorie: {if $post->category_id}{$category->name}{else} Žádná{/if}</p> <hr/>
+  Kategorie: {if $post->category_id}<a n:href="Homepage:category $post->category_id">{$category->name}{else} Žádná{/if}</a> <hr/>
   {$post->content} <br>
   {if  $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-		{else }<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
+		{else }<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
 		{/if} 
  
 {snippet likey}

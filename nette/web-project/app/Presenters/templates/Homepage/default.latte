@@ -8,11 +8,11 @@
 		<div class="date">{$post->created_at|date:'F j, Y'}</div>
 		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
         {if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-		{else}<img class= "img-fluid" src="{$basePath}/upload/nodick.jpg" alt="Obrázek k článku {$post->title}">
+		{else}<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
 		{/if}
 		<div class="">{$post->content|truncate:20}</div>
 		<p>zobrazení: {$post->views_count}</p>
-		<p>kategorie: {if $post->category_id}{$post->category_name}{else} Žádná{/if}</p>	
+		<p>kategorie: {if $post->category_id}<a n:href="Homepage:category $post->category_id">{$post->category_name}{else} Žádná{/if}</a></p>	
 		<a class="btn btn-warning mb-2 " n:href="Post:show $post->id"> Více</a>	
 	{else} <div class="alert alert-warning">Archivovaný příspěvek</div>
     {/if}	

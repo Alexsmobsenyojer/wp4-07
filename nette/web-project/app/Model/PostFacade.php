@@ -43,6 +43,13 @@ final class PostFacade
 		return $post;
 	}
 
+	public function getPostsByCategory(int $categoryId)
+	{
+		return $this->database
+			->table('posts')
+			->where(['category_id' => $categoryId]);
+	}
+
 	public function getComments(int $postId)
 	{
 		#return $this->database
@@ -151,6 +158,10 @@ final class PostFacade
 	public function getCategory($categoryId)
 	{
 		return $this->database->table('categories')->get($categoryId);
+	}
+	public function getCategoryname($categoryId)
+	{
+		return $this->database->table('categories')->where(["id" => $categoryId])->fetch()->name;
 	}
 
 }

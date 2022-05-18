@@ -34,6 +34,12 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 		$this->template->paginator = $paginator;	
 		$this->redrawControl("paginator");
 	}
+	public function renderCategory(int $categoryId): void
+	{ $category = $this->facade->getCategoryname($categoryId);
+	  $posts = $this->facade->getPostsByCategory($categoryId);
+	  $this->template->posts = $posts;
+	  $this->template->category = $category;
+	}
 	public function handleShowRndNmr()
 	{ $this->template->number = rand(1, 100); $this->redrawControl("randomNumber"); }
 }
