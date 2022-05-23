@@ -163,5 +163,12 @@ final class PostFacade
 	{
 		return $this->database->table('categories')->where(["id" => $categoryId])->fetch()->name;
 	}
-
+    public function countLikes(int $postId)
+	{
+		return $this->database->fetchField('SELECT COUNT(*) FROM rating WHERE post_id = ? AND like_val = 1', $postId);
+	}
+	public function countDisLikes(int $postId)
+	{
+		return $this->database->fetchField('SELECT COUNT(*) FROM rating WHERE post_id = ? AND like_val = 2', $postId);
+	}
 }
