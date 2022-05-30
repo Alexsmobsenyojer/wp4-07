@@ -171,4 +171,13 @@ final class PostFacade
 	{
 		return $this->database->fetchField('SELECT COUNT(*) FROM rating WHERE post_id = ? AND like_val = 2', $postId);
 	}
+	public function getPostsBySearch($search)
+	{
+		return $this->database->query(
+			'SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?',
+			'%' . $search . '%',
+			'%' . $search . '%'
+		);
+	}
+
 }

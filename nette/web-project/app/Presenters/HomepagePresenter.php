@@ -42,4 +42,20 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 	}
 	public function handleShowRndNmr()
 	{ $this->template->number = rand(1, 100); $this->redrawControl("randomNumber"); }
+	protected function createComponentSearchForm(): Form
+	{
+		$form = new Form;
+		$form->addText('search', '')->setAttribute('placeholder', 'Hledat');
+		$form->onSuccess[] = [$this, 'searchFormSucceeded'];
+		return $form;
+	}
+	public function searchFormSucceeded(\stdClass $data): void
+	{
+		$this->redirect('Homepage:search', $data->search);
+	}	
+	public function renderSearch($search): void
+	{ 
+	  $posts = $this->facade->getPostsBySearch($search);;
+	  $this->template->posts = $posts;
+	}
 }

@@ -2,15 +2,16 @@
 <div class="row d-flex justify-content-center">
 <div class="post w-75">
 <p><a n:href="Homepage:default">← zpět</a></p>
+<div class="border border-2 border-warning rounded m-2 p-sm-2 p-md-5">
 {if ($post->status=="OPEN") || ($post->status=="CLOSED ") || ($post->status=="ARCHIVED" && $user->isLoggedIn())}
-  <h1 n:block="title" class="text-center">{$post->title}</h1>
+  <h1 n:block="title" class="text-center">{$post->title}</h1> <hr>
   <div class="date">{$post->created_at|date:'F j, Y'} {$post->status}</div>
   <p>zobrazení:{$post->views_count}</p>
   Kategorie: {if $post->category_id}<a n:href="Homepage:category $post->category_id">{$category->name}{else} Žádná{/if}</a> <hr/>
   {$post->content} <br>
   {if  $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else }<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
-		{/if} 
+		{/if}
 {snippet likey}
 <table>
 {if $user->isLoggedIn()}
@@ -28,7 +29,7 @@
 </table>{/snippet}
 
 <a n:href="Edit:edit $post->id" n:if="$user->isLoggedIn() && $user->isInRole('admin')">Upravit příspěvek</a>  
-  
+</div>  
 
 </div>  </div>
 <div class="row d-flex justify-content-center">

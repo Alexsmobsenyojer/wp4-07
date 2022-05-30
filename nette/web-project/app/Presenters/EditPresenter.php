@@ -59,7 +59,7 @@ public function postFormSucceeded($form, $data): void
 			}
 			} else {
 				unset($data->image);
-			$this->flashMessage('Soubor nebyl přidán', 'failed');
+			$this->flashMessage('Obrázek nebyl přidán ', 'failed');
 			//$this->redirect('this');
 			}
 
