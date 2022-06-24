@@ -122,7 +122,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	protected function createComponentPfpForm(): Form
 	{
 	$form = new Form;
-	$form->addUpload('image', 'Soubor')
+	$form->addUpload('image', 'Nový Profilový obrázek:')
 	    ->setRequired()
 		->addRule(Form::IMAGE, 'Profile picture must be JPEG, PNG or GIF');
 		$form->addSubmit('send', 'Změnit Profilový obrázek');

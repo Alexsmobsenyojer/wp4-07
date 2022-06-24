@@ -8,10 +8,37 @@
   <div class="date">{$post->created_at|date:'F j, Y'} {$post->status}</div>
   <p>zobrazení:{$post->views_count}</p>
   Kategorie: {if $post->category_id}<a n:href="Homepage:category $post->category_id">{$category->name}{else} Žádná{/if}</a> <hr/>
-  {$post->content} <br>
-  {if  $post->image }<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
-		{else }<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
-		{/if}
+<div class="carousel slide" data-bs-ride="true">
+  <div class="carousel-indicators">
+  {foreach $images as $image}
+  {if $iterator->first}
+  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="active" aria-current="true" aria-label="Slide 1"></button>
+  {/if}
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{$iterator->counter}" ></button>
+  {/foreach}
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active  ratio ratio-16x9">
+      {if  $post->image}<img class= "img-fluid d-block rounded"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+	    {else }<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
+	    {/if} 
+      </div> 
+  {foreach $images as $image}    
+    <div class="carousel-item  ratio ratio-16x9">
+      <img src="{$basePath}/{$image->image}" class="d-block w-100" alt="...">
+    </div>
+  {/foreach}
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+{$post->content} <br>
 {snippet likey}
 <table>
 {if $user->isLoggedIn()}
@@ -44,15 +71,17 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-row align-items-center">
-              {if $comment->user_id} <img src="{$basePath}/{$comment->user_pfp}" class="rounded-circle" alt="avatar" width="25" height="25" />
+              {if $comment->user_id} <img src="{$basePath}/{$comment->user->pfp}" class="rounded-circle" alt="avatar" width="25" height="25" />
               {else}  <img src="{$basePath}/upload/user.png" alt="avatar" width="25" height="25" /> {/if}
                 <p class="small mb-0 ms-2"><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">	{$comment->name}	</a></b> napsal:</p>
-              </div>
-              {if ($user->isLoggedIn() && $user->isInRole('admin'))}
-    <a n:href="DeleteComment! $comment->id" class="ajax" >Smazat Komentář</a>
-    {else} {/if}
+              </div>   
+               <a>{$comment->created_at|date:'G:i j.n.Y '}</a>
             </div><br><p>{$comment->content}</p> 
-          </div>
+          
+            {if ($user->isLoggedIn() && $user->isInRole('admin'))}
+            <a n:href="DeleteComment! $comment->id" class="d-flex justify-content-end ajax" >Smazat Komentář</a>
+            {/if}
+         </div>
         </div>
   {/foreach}
   {/snippet}

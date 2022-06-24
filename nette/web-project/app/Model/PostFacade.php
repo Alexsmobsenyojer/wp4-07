@@ -52,15 +52,15 @@ final class PostFacade
 
 	public function getComments(int $postId)
 	{
-		#return $this->database
-			#->table('comments')
-			#->where('post_id', $postId);
-			return $this->database->query(
-				'
-				SELECT c.id, c.content, c.email, c.name, u.id AS user_id, u.pfp AS user_pfp  FROM comments c
-				LEFT JOIN users u ON c.user_id = u.id
-				WHERE post_id  = ?',$postId
-			);
+		return $this->database
+			->table('comments')
+			->where('post_id', $postId);
+			#return $this->database->query(
+			#	'
+			#	SELECT c.id, c.content, c.email, c.name, u.id AS user_id, u.pfp AS user_pfp  FROM comments c
+			#	LEFT JOIN users u ON c.user_id = u.id
+			#	WHERE post_id  = ?',$postId
+			#);
 	}
 
 	public function editPost(int $postId, array $data)
@@ -86,6 +86,8 @@ final class PostFacade
 		$likes->delete();
 		$comments = $this->database->table('comments')->where(['post_id' => $postId]);
 		$comments->delete();
+		$images = $this->database->table('images')->where(['post_id' => $postId]);
+		$images->delete();
 		$post = $this->database->table('posts')->get($postId);
 		$post->delete();
 	}
@@ -137,14 +139,16 @@ final class PostFacade
 			$this->database->table('rating')->insert(['user_id' => $userId, 'post_id' => $postId, 'like_val' => $like]);
 		}
 	}
-	public function getUserRating(int $postId, int $userId)
+	public function getUserRating(int $postId, $userId)
 	{
+		if ($userId != null){
 		$like = $this->database->table('rating')->where(['user_id' => $userId, 'post_id' => $postId]);
 		if ($like->count() == 0) {
 			return null;
 		} else {
 			return $like->fetch()->like_val;
 		}
+	}
 	}
 
 	public function getPublishedArticlesCount(): int
@@ -179,5 +183,19 @@ final class PostFacade
 			'%' . $search . '%'
 		);
 	}
-
+	public function getImages( $postId)
+	{
+		return $this->database->table('images')->where(['post_id' => $postId]);
+	}
+	public function insertImage (int $postId, $photo)
+	{
+		$this->database->table('images')->insert([
+			'post_id' => $postId,
+			'image' => $photo
+		]);
+	}
+	public function sortByDate ( )
+	{
+		
+	}
 }

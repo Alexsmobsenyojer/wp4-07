@@ -6,10 +6,10 @@
         <h2 class="text-center text-dark mt-3">Upravit údaje</h2>
         <div class="card my-3" style="background:rgba(248, 240, 227, 0.9)">
             <div class="text-center">
-            <img src="{$basePath}/{$user->identity->data["pfp"]}" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="100px" alt="profile">
-		         <br>            
+            <img src="{$basePath}/{$user->identity->data["pfp"]}" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-1" width="100px" alt="profile">
+		         <br>   <hr>         
                 Vaše přezdívka: {$user->identity->data["username"]}<br>Váš email: {$user->identity->data["email"]}<br>               
-            </div> 
+            </div> <hr>
             <div class="mx-3">{control pfpForm}</div>
             <div class="mx-3">{control editNameForm}</div>
             <div class="mx-3">{control editEmailForm}</div>

@@ -45,7 +45,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 	protected function createComponentSearchForm(): Form
 	{
 		$form = new Form;
-		$form->addText('search', '')->setAttribute('placeholder', 'Hledat');
+		$form->addText('search', '')->setHtmlAttribute('placeholder', 'Hledat');
 		$form->onSuccess[] = [$this, 'searchFormSucceeded'];
 		return $form;
 	}

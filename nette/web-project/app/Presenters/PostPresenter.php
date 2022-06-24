@@ -36,6 +36,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->template->category = $this->facade->getCategory($post->category_id);
 		$this->template->likecount = $this->facade->countLikes($postId);
 		$this->template->dislikecount = $this->facade->countDisLikes($postId);
+		$this->template->images = $this->facade->getImages($postId);
 	}
 
 	protected function createComponentCommentForm(): Form

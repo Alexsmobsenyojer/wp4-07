@@ -10,7 +10,7 @@
         {if $post->image}<img class= "img-fluid"src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
 		{else}<img class= "img-fluid" src="{$basePath}/upload/noimg.png" alt="Obrázek k článku {$post->title}">
 		{/if}
-		<div class="">{$post->content|truncate:20}</div>
+		<div class="">{$post->content|truncate:50}</div>
 		<p>zobrazení: {$post->views_count}</p>
 		<p>kategorie: {if $post->category_id}<a n:href="Homepage:category $post->category_id">{$post->category_name}{else} Žádná{/if}</a></p>	
 		<a class="btn btn-warning mb-2 " n:href="Post:show $post->id"> Více</a>	
